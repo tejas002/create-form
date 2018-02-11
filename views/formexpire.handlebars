@@ -11,12 +11,27 @@
 </head>
 
 <body >
-    
+    {{#if formexp.length}}
     <div class="card m-4">
         <div class="card-body">
-                <h1>Form Expired</h1>
+                <h1>{{formexp}}</h1>
         </div>
     </div>
+{{/if}}
+    
+    
+{{#if data.length}}
+<div class="card-body m-1 text-center">
+    {{#each data as |article index|}}
+        
+        <p><h4>{{index}}</h4> {{article}}</p>
+
+    <p></p>
+    {{/each}}
+</div>
+
+{{/if}}
+<p>If there is no data,it has been expired and deleted.So create a form again</p>
     
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>

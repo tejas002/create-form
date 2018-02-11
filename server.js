@@ -111,7 +111,7 @@ app.get('/form/:formid', (req, res) => {
     })
         .then(function (dat) {
             if (!dat) {
-                res.render('formexpire')
+                res.render('formexpire',{formexp:'Form Expire'})
             }
             
             res.render('newuserform', {
@@ -170,6 +170,18 @@ app.put('/form/:formid', (req, res) => {
 app.get('/thanks', (req, res) => {
     res.sendFile(__dirname + '/views/thanks.html')
 })
+
+app.get('/api/formdata', (req, res) => {
+    FormSchema.find({}).sort('-creationDate').
+    then(function(data) {
+        res.render('formexpire',{data:data})
+        
+    }
+       ).catch(function (err) {
+        console.log(err)
+    })
+})
+
 
 
 // app.use('/articles', articles)
