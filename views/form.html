@@ -61,6 +61,17 @@
                             <input class="form-control" type="text" placeholder="Enter label" ng-model="vm.type.options.label[$index]" />
                         </span>
                     </div>
+                    <div ng-if="vm.type.fvalue=='radio' && vm.type.fname" ng-init='vm.type.options={}'>
+                        <label ng-if="vm.type.fvalue" class="control-label">Number of Labels</label>
+                        <select ng-model="vm.nooflabels">
+                            <option ng-repeat="x in [1,2,3]">{{x}}</option>
+                        </select>{{vm.nooflabels}}
+                        <br/>
+                        <span ng-repeat="n in vm.rangeValue(vm.nooflabels) track by $index" ng-if="vm.nooflabels">
+                            <label class="control-label">Type Label Name</label>
+                            <input class="form-control" type="text" placeholder="Enter label" ng-model="vm.type.options.label[$index]" />
+                        </span>
+                    </div>
                 </div>
 
 
@@ -75,7 +86,7 @@
             <form action="{{'/form/' + vm.uniq }}" method="post" id='newform'>
                 <div class="form-group" ng-if="vm.items.length>0">
                     <fieldset>
-                        <legend>User Form</legend>
+                        <legend>User Form Preview</legend>
                         <!-- <input class="form-control" type="text" name="user[name]" placeholder="Enter name" ng-model="vm.name" autofocus /> -->
                         <!-- {{vm.items.length}} -->
                         <div ng-repeat='item in vm.items track by $index'>
@@ -90,11 +101,11 @@
                             </div>
 
                             <div ng-if="item.fvalue=='password'">
-                                    <label for="{{item.fname}}">{{item.fname}}</label>
-                                    <input type="text" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
-                                    </label>
-                                    <button ng-click='vm.del($index)'>Delete Field</button>
-                                </div>
+                                <label for="{{item.fname}}">{{item.fname}}</label>
+                                <input type="password" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
 
                             <div ng-if="item.fvalue=='checkbox'">
                                 <label ng-repeat="k in item.options.label">{{k}}
@@ -102,7 +113,28 @@
                                 </label>
                                 <button ng-click='vm.del($index)'>Delete Field</button>
                             </div>
-                            
+
+                            <div ng-if="item.fvalue=='radio'">
+                                <label ng-repeat="k in item.options.label">{{k}}
+                                    <input type="radio" name="{{item.fname}}-{{$index}}-{{item}}" value="{{k}}" id='item-{{$index}}' checked="checked">
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
+
+                            <div ng-if="item.fvalue=='email'">
+                                <label for="{{item.fname}}">{{item.fname}}</label>
+                                <input type="email" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
+
+                            <div ng-if="item.fvalue=='date'">
+                                <label for="{{item.fname}}">{{item.fname}}</label>
+                                <input type="date" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
+
                         </div>
                 </div>
                 <button class="btn btn-primary clickable" type="submit">Create Form</button>
@@ -123,7 +155,7 @@
             vm.type = {}
             vm.items = []
             vm.uniq = new Date().getTime()
-            vm.inputtypes = ['text', 'password', 'checkbox']
+            vm.inputtypes = ['text', 'password', 'checkbox', 'radio', 'email','date']
 
             vm.addNewChoice = function () {
                 vm.show = true

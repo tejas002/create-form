@@ -18,18 +18,36 @@
                         <label for="[{item.fname}]">[{item.fname}]</label>
                         <input type="text" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
                     </div>
+
                     <div ng-if="item.fvalue=='password'">
                         <label for="[{item.fname}]">[{item.fname}]</label>
                         <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
                     </div>
+
                     <div ng-if="item.fvalue=='checkbox'">
-                        {{!--
-                        <label for="[{item.fname}]">[{item.fname}]</label>
                         <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'> --}}
                         <label for="[{item.fname}]">[{item.fname}]</label>&nbsp;
                         <label ng-repeat="k in item.options.label">[{k}]
                             <input type="checkbox" name="[{item.fname}]-[{$index}]-[{item}]" value="[{k}]" id='item-[{$index}]'>
                         </label>
+                    </div>
+
+                    <div ng-if="item.fvalue=='radio'">
+                        <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'> --}}
+                        <label for="[{item.fname}]">[{item.fname}]</label>&nbsp;
+                        <label ng-repeat="k in item.options.label">[{k}]
+                            <input type="radio" name="[{item.fname}]-[{$parent.$index}]-[{item}]" value="[{k}]" id='item-[{$index}]'>
+                        </label>
+                    </div>
+
+                    <div ng-if="item.fvalue=='email'">
+                        <label for="[{item.fname}]">[{item.fname}]</label>
+                        <input type="email" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
+                    </div>
+
+                    <div ng-if="item.fvalue=='date'">
+                        <label for="[{item.fname}]">[{item.fname}]</label>
+                        <input type="date" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
                     </div>
 
                 </div>
