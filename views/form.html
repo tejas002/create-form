@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>UserForm</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myapp" ng-controller='myControlller as vm' ng-cloak>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background: #002143;">
+        <div class="container">
+            <a class="navbar-brand" href="/">UserForm&nbsp;
+                <i class="fa fa-yelp fa-lg"></i>
+            </a>
+            <button class="navbar-toggler clickable" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li> -->
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/form">Create Form</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+    <div class="card m-4">
+        <div class="card-body">
+            <div class="form-group" ng-if="vm.show">
+
+                <label class="control-label" for="projects">Select Input Type</label>
+                <select ng-model="vm.type.fvalue">
+                    <option ng-repeat="x in vm.inputtypes">{{x}}</option>
+                </select>
+                <br/>
+                <div ng-if="vm.type.fvalue">
+                    <label ng-if="vm.type.fvalue" class="control-label" for="projects">Type Field Name</label>
+                    <input class="form-control" type="text" placeholder="Enter name" ng-model="vm.type.fname" />
+                    <div ng-if="vm.type.fvalue=='checkbox' && vm.type.fname" ng-init='vm.type.options={}'>
+                        <label ng-if="vm.type.fvalue" class="control-label">Number of Labels</label>
+                        <select ng-model="vm.nooflabels">
+                            <option ng-repeat="x in [1,2,3]">{{x}}</option>
+                        </select>{{vm.nooflabels}}
+                        <br/>
+                        <span ng-repeat="n in vm.rangeValue(vm.nooflabels) track by $index" ng-if="vm.nooflabels">
+                            <label class="control-label">Type Label Name</label>
+                            <input class="form-control" type="text" placeholder="Enter label" ng-model="vm.type.options.label[$index]" />
+                        </span>
+                    </div>
+                </div>
+
+
+                <a class="btn btn-warning" ng-click="vm.addField()">Add to Form</a>
+
+
+            </div>
+            <a class="btn btn-primary" ng-click="vm.addNewChoice()">Add Field</a>
+
+            <br/>
+            <br/>
+            <form action="{{'/form/' + vm.uniq }}" method="post" id='newform'>
+                <div class="form-group" ng-if="vm.items.length>0">
+                    <fieldset>
+                        <legend>User Form</legend>
+                        <!-- <input class="form-control" type="text" name="user[name]" placeholder="Enter name" ng-model="vm.name" autofocus /> -->
+                        <!-- {{vm.items.length}} -->
+                        <div ng-repeat='item in vm.items track by $index'>
+                            <!-- <label for="{{item.fname}}">{{item.fname}}</label>
+                            <input type="{{item.fvalue}}" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' /> -->
+
+                            <div ng-if="item.fvalue=='text'">
+                                <label for="{{item.fname}}">{{item.fname}}</label>
+                                <input type="text" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
+
+                            <div ng-if="item.fvalue=='password'">
+                                    <label for="{{item.fname}}">{{item.fname}}</label>
+                                    <input type="text" name="{{item.fname}}-{{$index}}-{{item}}" id='item-{{$index}}' />
+                                    </label>
+                                    <button ng-click='vm.del($index)'>Delete Field</button>
+                                </div>
+
+                            <div ng-if="item.fvalue=='checkbox'">
+                                <label ng-repeat="k in item.options.label">{{k}}
+                                    <input type="checkbox" name="{{item.fname}}-{{$index}}-{{item}}" value="{{k}}" id='item-{{$index}}' checked="checked">
+                                </label>
+                                <button ng-click='vm.del($index)'>Delete Field</button>
+                            </div>
+                            
+                        </div>
+                </div>
+                <button class="btn btn-primary clickable" type="submit">Create Form</button>
+
+
+
+
+
+            </form>
+        </div>
+    </div>
+    <script>
+        var app = angular.module("myapp", []);
+        app.controller("myControlller", function ($scope) {
+            vm = this
+            vm.userform = {}
+            vm.show = false
+            vm.type = {}
+            vm.items = []
+            vm.uniq = new Date().getTime()
+            vm.inputtypes = ['text', 'password', 'checkbox']
+
+            vm.addNewChoice = function () {
+                vm.show = true
+
+            }
+            vm.addField = function () {
+
+                vm.show = false;
+                vm.items.push(vm.type)
+                vm.type = {}
+
+
+            }
+            vm.del = function (i) {
+                vm.items.splice(i, 1);
+            }
+            vm.rangeValue = function (n) {
+                if (n) {
+
+                    n = parseInt(n)
+                    return new Array(n);
+
+                }
+
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

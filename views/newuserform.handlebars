@@ -1,0 +1,68 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+<div class="card m-4" ng-app="myapp2" ng-controller='myControlller2 as vm' ng-cloak>
+    <div class="card-body">
+        <form action="[{'/form/' + vm.formid + '?_method=put'}]" method="post" id='newform'>
+            <div class="form-group">
+                <legend>User Form</legend>
+                <!-- <input class="form-control" type="text" name="user[name]" placeholder="Enter name" ng-model="vm.name" autofocus /> -->
+
+                <div ng-repeat='item in vm.items track by $index'>
+
+                    {{!--
+                    <label for="[{item.fname}]">[{item.fname}]</label>
+                    <input type="[{item.fvalue}]" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]' /> --}}
+
+
+                    <div ng-if="item.fvalue=='text'">
+                        <label for="[{item.fname}]">[{item.fname}]</label>
+                        <input type="text" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
+                    </div>
+                    <div ng-if="item.fvalue=='password'">
+                        <label for="[{item.fname}]">[{item.fname}]</label>
+                        <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'>
+                    </div>
+                    <div ng-if="item.fvalue=='checkbox'">
+                        {{!--
+                        <label for="[{item.fname}]">[{item.fname}]</label>
+                        <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'> --}}
+                        <label for="[{item.fname}]">[{item.fname}]</label>&nbsp;
+                        <label ng-repeat="k in item.options.label">[{k}]
+                            <input type="checkbox" name="[{item.fname}]-[{$index}]-[{item}]" value="[{k}]" id='item-[{$index}]'>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <button class="btn btn-primary clickable" type="submit">Submit</button>
+
+
+        </form>
+    </div>
+</div>
+
+<script>
+    var field = {{{ data }}}
+    var formid = {{formid}}
+
+
+    var app = angular.module("myapp2", []);
+    app.config(function ($interpolateProvider) {
+        $interpolateProvider.startSymbol('[{');
+        $interpolateProvider.endSymbol('}]');
+    });
+    app.controller("myControlller2", function ($scope) {
+
+        vm = this
+        vm.userform = {}
+        vm.show = false
+        vm.type = {}
+        vm.items = field
+        vm.formid = formid
+
+
+    });
+</script>
