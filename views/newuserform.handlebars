@@ -25,7 +25,7 @@
                     </div>
 
                     <div ng-if="item.fvalue=='checkbox'">
-                        <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'> --}}
+                        
                         <label for="[{item.fname}]">[{item.fname}]</label>&nbsp;
                         <label ng-repeat="k in item.options.label">[{k}]
                             <input type="checkbox" name="[{item.fname}]-[{$index}]-[{item}]" value="[{k}]" id='item-[{$index}]'>
@@ -33,7 +33,7 @@
                     </div>
 
                     <div ng-if="item.fvalue=='radio'">
-                        <input type="password" name="[{item.fname}]-[{$index}]-[{item}]" id='item-[{$index}]'> --}}
+                        
                         <label for="[{item.fname}]">[{item.fname}]</label>&nbsp;
                         <label ng-repeat="k in item.options.label">[{k}]
                             <input type="radio" name="[{item.fname}]-[{$parent.$index}]-[{item}]" value="[{k}]" id='item-[{$index}]'>

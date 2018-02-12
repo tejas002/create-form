@@ -108,6 +108,7 @@
                             </div>
 
                             <div ng-if="item.fvalue=='checkbox'">
+                                <label for="{{item.fname}}">{{item.fname}}</label>&nbsp;
                                 <label ng-repeat="k in item.options.label">{{k}}
                                     <input type="checkbox" name="{{item.fname}}-{{$index}}-{{item}}" value="{{k}}" id='item-{{$index}}' checked="checked">
                                 </label>
@@ -115,6 +116,7 @@
                             </div>
 
                             <div ng-if="item.fvalue=='radio'">
+                                <label for="{{item.fname}}">{{item.fname}}</label>&nbsp;
                                 <label ng-repeat="k in item.options.label">{{k}}
                                     <input type="radio" name="{{item.fname}}-{{$index}}-{{item}}" value="{{k}}" id='item-{{$index}}' checked="checked">
                                 </label>
@@ -155,7 +157,7 @@
             vm.type = {}
             vm.items = []
             vm.uniq = new Date().getTime()
-            vm.inputtypes = ['text', 'password', 'checkbox', 'radio', 'email','date']
+            vm.inputtypes = ['text', 'password', 'checkbox', 'radio', 'email', 'date']
 
             vm.addNewChoice = function () {
                 vm.show = true
@@ -169,6 +171,7 @@
 
 
             }
+            console.log(vm.items)
             vm.del = function (i) {
                 vm.items.splice(i, 1);
             }
