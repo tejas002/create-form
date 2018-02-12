@@ -26,16 +26,16 @@ module.exports = (app) => {
         arr = []
 
         data = Object.keys(req.body)
-        console.log(data)
+
 
 
         for (var i of data) {
 
             arr.push(JSON.parse(i.split("-")[2]))
         }
-        console.log('Array', arr)
+
         arr = removeDuplicates(arr, "fname")
-        console.log('Array', arr)
+
 
 
         var formdetail = {
@@ -47,7 +47,7 @@ module.exports = (app) => {
 
         FormSchema.create(formdetail)
             .then(function (f) {
-                //console.log('Data inserted Succesfully', f)
+
                 res.render('newuserform', {
                     data: JSON.stringify(arr),
                     formid: req.params.formid
@@ -62,7 +62,7 @@ module.exports = (app) => {
         //res.redirect('/userform')
     })
 
-    
+
 
 
     app.get('/form/:formid', (req, res) => {
@@ -154,15 +154,15 @@ module.exports = (app) => {
 }
 
 function removeDuplicates(originalArray, prop) {
-    console.log("Inside Duplicates",prop,originalArray)
+
     var newArray = [];
     var lookupObject = {};
 
     for (var i in originalArray) {
         lookupObject[originalArray[i][prop]] = originalArray[i];
-        console.log('lol',lookupObject)
+
     }
-    console.log(lookupObject)
+
 
     for (i in lookupObject) {
         newArray.push(lookupObject[i]);
